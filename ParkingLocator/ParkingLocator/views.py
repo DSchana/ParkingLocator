@@ -10,7 +10,7 @@ def index(request):
 def parking(request):
     auth_head = {"Authorization": "Bearer mi5qSSqdhmrNXBjLq5MBMwuqcS0q8aE4u52fwqrG8CkrBjjksgdV8ZblHdh4ThtDqQVFapfOwrCqadcTH4sJIMhQgEcWpc0bK_9ms_rJ1H-xMT1Amp4tmH_PhAg3X3Yx"}
     city = request.GET.get("city", "")
-    endpoint = "https://api.yelp.com/v3/businesses/search?categories=Parking&location=" + city
+    endpoint = "https://api.yelp.com/v3/businesses/search?categories=Parking&sort_by=rating&location=" + city
 
     yelp_res = requests.get(endpoint, headers=auth_head)
     if yelp_res.status_code == 404:
@@ -20,5 +20,7 @@ def parking(request):
 
     for business in res_json["businesses"]:
         business["score"] = round((business["review_count"] * business["rating"]) / (business["review_count"] + 1), 2)
+
+    res_json["businesses"].reverse()
 
     return render(request, "parking.html", { "businesses": res_json["businesses"] })
