@@ -1,0 +1,10 @@
+<h1>Here's What We Found!</h1>
+{% for business in businesses %}
+    <img src="{{ business.image_url }}" alt="" width=100 height=100>
+    <h2><a href="{{ business.url }}">{{ business.name }}</a></h2>
+    <h3>{{ business.rating }}/5 ({{ business.review_count }} reviews) {{ business.score }} score</h3>
+    <p>{{business.location.address1}} {{business.location.address2}} {{business.location.address3}}
+       {{business.location.city}}, {{business.location.state}}
+       {{business.location.country}} {{business.location.zip_code}} </p>
+    </br>
+{% endfor %}}
